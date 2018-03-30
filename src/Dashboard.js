@@ -5,26 +5,21 @@ import {
   Redirect
 } from 'react-router-dom'
 import {connect} from 'react-redux'
+import {logout} from './store/Auth.redux'
+import Counter from './Counter'
 
-function PageA () {
-  return <h2>Page A</h2>
-}
 function PageB () {
   return <h2>Page B</h2>
 }
 function PageC () {
   return <h2>Page C</h2>
 }
-@connect(
-  state => state
-)
 console.log(connect)
 class Dashboard extends React.Component{
   constructor (props) {
     super(props)
   }
   render () {
-    console.log(this.props)
     const app = (
       <div>
         <ul>
@@ -38,16 +33,20 @@ class Dashboard extends React.Component{
             <Link to='/dashboard/c'>Page C</Link>
           </li>
         </ul>
-        <Route path='/dashboard/' exact component={PageA} />
+        <div>
+          <button onClick={this.props.logout}>注销登陆</button>
+        </div>
+        <Route path='/dashboard/' exact component={Counter} />
         <Route path='/dashboard/b' component={PageB} />
         <Route path='/dashboard/c' component={PageC} />
       </div>
     )
     const redirectToLogin = <Redirect to='login' />
-    return (
-      <h2>test</h2>
-    )
+    return this.props.isAuth ? app : redirectToLogin
   }
 }
-
+Dashboard = connect(
+  state => state.auth,
+  {logout}
+)(Dashboard)
 export default Dashboard

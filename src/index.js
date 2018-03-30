@@ -7,7 +7,6 @@ import registerServiceWorker from './registerServiceWorker';
 import {
   BrowserRouter,
   Route,
-  Link,
   Redirect,
   Switch
 } from 'react-router-dom'
