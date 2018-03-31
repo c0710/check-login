@@ -1,5 +1,6 @@
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
+const INCREMENT_ASYNC = 'INCREMENT_ASYNC'
 
 export function counter (state = 10, action) {
   switch (action.type) {
@@ -17,4 +18,13 @@ export function increment () {
 }
 export function decrement () {
   return {type: DECREMENT}
+}
+export function incrementAsync () {
+  // thunk插件的用处， 这里可以返回函数
+  return dispatch => {
+    setTimeout(() => {
+      // 异步结束后， 手动dispatch
+      dispatch(increment())
+    }, 1000)
+  }
 }
